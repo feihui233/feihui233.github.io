@@ -1,237 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/12/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-<link rel="stylesheet" href="/css/main.css">
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="代码Go">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="代码Go">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="feihui">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://example.com/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title>代码Go</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">代码Go</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
-
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/" class="post-title-link" itemprop="url">java对象复制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-19 17:09:00 / 修改时间：17:13:14" itemprop="dateCreated datePublished" datetime="2022-12-19T17:09:00+08:00">2022-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。</p>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>java对象复制</title>
+    <url>/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/</url>
+    <content><![CDATA[<p>在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。</p>
 <p>这种转换最原始的方式就是手动编写大量的get&#x2F;set代码，属性少的时候还好，属性多的时候就非常繁琐了，一个合格的程序员显然不会仅仅局限于get&#x2F;set。</p>
 <p>针对这个问题，市场上诞生了很多方便的类库，用于对象拷贝。常用的有apache BeanUtils、spring BeanUtils、Dozer、Orika等拷贝工具。</p>
 <p>何不可变类<br>当类的实例一经创建，其内容便不可改变，即无法修改其成员变量。</p>
@@ -239,12 +29,12 @@
 <p>不可变类的特殊性：<br>有两个不可变类对象，当两个对象指向同一引用时，修改某一对象的值，不会对另一个对象造成影响。</p>
 <p>下面举例说明</p>
 <p>源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">aa</span> <span class="operator">=</span> <span class="string">&quot;1&quot;</span>;</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">b</span> <span class="operator">=</span> a;</span><br><span class="line">    <span class="type">String</span> <span class="variable">bb</span> <span class="operator">=</span> aa;</span><br><span class="line">    System.out.println(<span class="string">&quot;a修改前b:&quot;</span>+b);</span><br><span class="line">    System.out.println(<span class="string">&quot;aa修改前bb:&quot;</span>+bb);</span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">    aa = <span class="string">&quot;2&quot;</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;a修改后b:&quot;</span>+b);</span><br><span class="line">    System.out.println(<span class="string">&quot;aa修改后bb:&quot;</span>+bb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">aa</span> <span class="operator">=</span> <span class="string">&quot;1&quot;</span>;</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">b</span> <span class="operator">=</span> a;</span><br><span class="line">    <span class="type">String</span> <span class="variable">bb</span> <span class="operator">=</span> aa;</span><br><span class="line">    System.out.println(<span class="string">&quot;a修改前b:&quot;</span>+b);</span><br><span class="line">    System.out.println(<span class="string">&quot;aa修改前bb:&quot;</span>+bb);</span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">    aa = <span class="string">&quot;2&quot;</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;a修改后b:&quot;</span>+b);</span><br><span class="line">    System.out.println(<span class="string">&quot;aa修改后bb:&quot;</span>+bb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <p>debug：</p>
 <p>日志：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a修改前b:1</span><br><span class="line">aa修改前bb:1</span><br><span class="line">a修改后b:1</span><br><span class="line">aa修改后bb:1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a修改前b:1</span><br><span class="line">aa修改前bb:1</span><br><span class="line">a修改后b:1</span><br><span class="line">aa修改后bb:1</span><br></pre></td></tr></table></figure>
 
 
 <p>由此可见，a和aa的修改不会影响b和bb的值。</p>
@@ -266,10 +56,10 @@
 <p>Introspector：<br>是一个专门处理bean的工具类，用来获取Bean体系里的propertiesDescriptor、methodDescriptor利用反射获取Method信息，是反射的上层。只进行一次反射解析，通过WeakReference静态类级别缓存Method，在jvm不够时会被回收。</p>
 <p>特点：</p>
 <p>字段名不一致，属性无法复制；<br>类型不一致，属性无法复制。但是注意，如果类型为基本类型以及基本类型的包装类，这种可以转化；<br>浅拷贝。<br>依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.2.8.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.2.8.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
 <p>方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"></span><br><span class="line"> * source：源对象</span><br><span class="line"> * target：目标对象</span><br><span class="line"> * editable：目标对象类的Class对象（需复制的属性基于该Class，当该值为null时需复制的属性基于目标对象的Class）</span><br><span class="line"> * ignoreProperties：需忽略的属性列表</span><br><span class="line">   */</span><br><span class="line">    BeanUtils.copyProperties(Object source, Object target)</span><br><span class="line"></span><br><span class="line">BeanUtils.copyProperties(Object source, Object target, Class&lt;?&gt; editable)</span><br><span class="line"></span><br><span class="line">BeanUtils.copyProperties(Object source, Object target, String... ignoreProperties)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"></span><br><span class="line"> * source：源对象</span><br><span class="line"> * target：目标对象</span><br><span class="line"> * editable：目标对象类的Class对象（需复制的属性基于该Class，当该值为null时需复制的属性基于目标对象的Class）</span><br><span class="line"> * ignoreProperties：需忽略的属性列表</span><br><span class="line">   */</span><br><span class="line">    BeanUtils.copyProperties(Object source, Object target)</span><br><span class="line"></span><br><span class="line">BeanUtils.copyProperties(Object source, Object target, Class&lt;?&gt; editable)</span><br><span class="line"></span><br><span class="line">BeanUtils.copyProperties(Object source, Object target, String... ignoreProperties)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>实现：</p>
 <pre><code>public static void main(String[] args) &#123;
@@ -286,11 +76,11 @@ System.out.println(JSON.toJSONString(userVO));
 <p>Apache BeanUtils使用起来很方便，不过其底层源码为了追求完美，加了过多的包装，使用了很多反射，做了很多校验，做了类型的转换，甚至还会检验对象所属的类的可访问性，可谓相当复杂，过度的追求完美反而导致兼容性变差，也导致了性能较低，所以阿里巴巴开发手册上强制避免使用Apache BeanUtils。</p>
 <p>特点：</p>
 <p>字段名不一致的属性无法被复制；<br>类型不一致的字段，将会进行默认类型转化；<br>浅拷贝。<br>依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.9.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.9.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
 
 <p>方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**](/**)</span><br><span class="line"></span><br><span class="line"> * dest：目标对象</span><br><span class="line"> * orig：源对象</span><br><span class="line">   */</span><br><span class="line">    BeanUtils.copyProperties(Object dest, Object orig)</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**](/**)</span><br><span class="line"></span><br><span class="line"> * dest：目标对象</span><br><span class="line"> * orig：源对象</span><br><span class="line">   */</span><br><span class="line">    BeanUtils.copyProperties(Object dest, Object orig)</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
 
 <p> 实现：</p>
 <p> 实现：</p>
@@ -307,7 +97,7 @@ System.out.println(JSON.toJSONString(userVO));
 <p>4.BeanCopier<br>Cglib BeanCopier的原理与上面两个Beanutils原理不太一样，其主要使用CGlib字节码技术动态生成一个代理类，代理类实现get和set方法。生成代理类过程存在一定开销，但是一旦生成，我们可以缓存起来重复使用，所有Cglib性能相比以上两种Beanutils性能比较好。</p>
 <p>特点：</p>
 <p>字段名不一致，属性无法复制<br>类型不一致，属性无法复制。如果类型为基本类型&#x2F;基本类型的包装类型，这两者也无法被拷贝。但可自定义转换器实现不同类型的拷贝。<br>浅拷贝<br>依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cglib&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;cglib&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cglib&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;cglib&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
 
 <p>方法：</p>
@@ -326,7 +116,7 @@ System.out.println(JSON.toJSONString(userVO));
 <li><p>to   目标对象</p>
 </li>
 <li><p>converter    转换器<br>*&#x2F;<br> BeanCopier beanCopier &#x3D; BeanCopier.create(Class source, Class target, boolean useConverter);<br> beanCopier.copy(Object from, Object to, Converter converter);</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  实现：</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    UserDTO userDTO = new UserDTO();</span><br><span class="line">    userDTO.setId(1);</span><br><span class="line">    userDTO.setUserName(&quot;哈哈&quot;);</span><br><span class="line">    userDTO.setCreateTime(new Date());</span><br><span class="line"></span><br><span class="line">UserVO userVO = new UserVO();</span><br><span class="line">BeanCopier beanCopier = BeanCopier.create(UserDTO.class, UserVO.class, false);</span><br><span class="line">beanCopier.copy(userDTO, userVO, null);</span><br><span class="line">System.out.println(JSON.toJSONString(userVO));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  实现：</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    UserDTO userDTO = new UserDTO();</span><br><span class="line">    userDTO.setId(1);</span><br><span class="line">    userDTO.setUserName(&quot;哈哈&quot;);</span><br><span class="line">    userDTO.setCreateTime(new Date());</span><br><span class="line"></span><br><span class="line">UserVO userVO = new UserVO();</span><br><span class="line">BeanCopier beanCopier = BeanCopier.create(UserDTO.class, UserVO.class, false);</span><br><span class="line">beanCopier.copy(userDTO, userVO, null);</span><br><span class="line">System.out.println(JSON.toJSONString(userVO));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>5.Orika<br>Orika也是一个跟Dozer类似的重量级属性复制工具类，也提供诸如Dozer类似的功能。但是Orika无需使用繁琐 XML配置，它自身提供一套非常简洁的 API 用法，非常容易上手。</p>
 <p>Orika底层基于Javassist生成字段属性的映射的字节码，然后直接动态加载执行字节码文件，相比于Dozer的这种使用反射原来的工具类，速度上会快很多。Orika的整个流程其实是需要使用到Java的反射的，只是在真正拷贝的属性的时候没有使用反射。</p>
@@ -576,74 +366,54 @@ Class&lt;? extends IConvert&gt; convert() default IConvert.class;
 <p>public static void main(String[] args) {<br>    UserDTO userDTO &#x3D; new UserDTO();<br>    userDTO.setId(1);<br>    userDTO.setUserName(“哈哈”);<br>    userDTO.setCreateTime(new Date());<br>    JMapper&lt;UserVO, UserDTO&gt; jMapper &#x3D; new JMapper&lt;&gt;(UserVO.class, UserDTO.class, new JMapperAPI()<br>            .add(JMapperAPI.mappedClass(UserVO.class)<br>                    .add(JMapperAPI.attribute(“id”).value(“id”))<br>                    .add(JMapperAPI.attribute(“userName”).value(“userName”))<br>                    .add(JMapperAPI.attribute(“createTime”).value(“createTime”))<br>            ));<br>    UserVO userVO &#x3D; jMapper.getDestination(userDTO);<br>    System.out.println(JSON.toJSONString(userVO));<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>12.Json2Json<br>这种通过JSON序列化和反序列化的方式，把源对象转为JSON串，再把JSON串转为目标对象，虽然也能达到复制的目的，但不推荐使用。</p>
 <p>实现：</p>
 <p>public static void main(String[] args) {<br>    UserDTO userDTO &#x3D; new UserDTO();<br>    userDTO.setId(1);<br>    userDTO.setUserName(“哈哈”);<br>    userDTO.setCreateTime(new Date());<br>    UserVO userVO &#x3D; JSON.parseObject(JSON.toJSONString(userDTO), UserVO.class);<br>    System.out.println(JSON.toJSONString(userVO));<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>复制方案选择<br>手写get&#x2F;set肯定是效率最高的；<br>不要使用Apache Beanutils，因为效率低，阿里巴巴规范都直接禁止使用；<br>一般情况使用Spring Beanutils就可以了，效率OK，且本来就是Spring中的东西，不用依赖其它包。</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test_my_site</title>
+    <url>/2022/12/19/test-my-site/</url>
+    <content><![CDATA[<h1 id="这是一段测试文本"><a href="#这是一段测试文本" class="headerlink" title="这是一段测试文本"></a>这是一段测试文本</h1><p>在文章中插入引言，可包含作者、来源和标题。</p>
+<p><strong>别号：</strong> quote</p>
+<blockquote><p>content</p>
+<footer><strong>[author[</strong><cite>source]] [link] [source_link_title]</cite></footer></blockquote>
 
-      
-    </div>
+<p><strong>没有提供参数，则只输出普通的 blockquote</strong></p>
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<p><strong>引用书上的句子</strong></p>
+<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+<p><strong>引用 Twitter</strong></p>
+<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/">http://devdocs.io</a></p>
+<footer><strong>@DevDocs</strong><cite><a href="https://twitter.com/devdocs/status/356095192085962752">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">AtomicInteger源码分析</a>
-        </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+<p><strong>引用网络上的文章</strong></p>
+<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
+<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
 
-              <time title="创建时间：2022-12-19 17:09:00 / 修改时间：17:52:13" itemprop="dateCreated datePublished" datetime="2022-12-19T17:09:00+08:00">2022-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet"><a href="#深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet" class="headerlink" title="深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()"></a>深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()</h3><p>为什么需要AtomicInteger原子操作类？</p>
+<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>在文章中嵌入 Gist。</p>
+<script src="//gist.github.com/gist_id.js?file=[filename]"></script>]]></content>
+      <categories>
+        <category>Diary</category>
+        <category>PlayStation</category>
+      </categories>
+      <tags>
+        <tag>demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AtomicInteger源码分析</title>
+    <url>/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[<h3 id="深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet"><a href="#深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet" class="headerlink" title="深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()"></a>深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()</h3><p>为什么需要AtomicInteger原子操作类？</p>
 <p>对于Java中的运算操作，例如自增或自减，若没有进行额外的同步操作，在多线程环境下就是线程不安全的。num++解析为num&#x3D;num+1，明显，这个操作不具备原子性，多线程并发共享这个变量时必然会出现问题。</p>
 <p>public class AtomicIntegerTest {</p>
 <pre><code>private static final int THREADS_CONUT = 20;
@@ -888,355 +658,12 @@ public short shortValue() &#123;
 private static final long serialVersionUID = -8742448824652078965L;
 &#125;
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/test-my-site/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/test-my-site/" class="post-title-link" itemprop="url">test_my_site</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-19 09:07:16 / 修改时间：10:01:09" itemprop="dateCreated datePublished" datetime="2022-12-19T09:07:16+08:00">2022-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/PlayStation/" itemprop="url" rel="index"><span itemprop="name">PlayStation</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="这是一段测试文本"><a href="#这是一段测试文本" class="headerlink" title="这是一段测试文本"></a>这是一段测试文本</h1><p>在文章中插入引言，可包含作者、来源和标题。</p>
-<p><strong>别号：</strong> quote</p>
-<blockquote><p>content</p>
-<footer><strong>[author[</strong><cite>source]] [link] [source_link_title]</cite></footer></blockquote>
-
-<p><strong>没有提供参数，则只输出普通的 blockquote</strong></p>
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>
-
-<p><strong>引用书上的句子</strong></p>
-<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
-<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
-
-<p><strong>引用 Twitter</strong></p>
-<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a target="_blank" rel="noopener" href="http://devdocs.io/">http://devdocs.io</a></p>
-<footer><strong>@DevDocs</strong><cite><a target="_blank" rel="noopener" href="https://twitter.com/devdocs/status/356095192085962752">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
-
-
-
-<p><strong>引用网络上的文章</strong></p>
-<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
-
-<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>在文章中嵌入 Gist。</p>
-<script src="//gist.github.com/gist_id.js?file=[filename]"></script>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-12-19 09:06:05" itemprop="dateCreated datePublished" datetime="2022-12-19T09:06:05+08:00">2022-12-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Author</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">4</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Author</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+</search>

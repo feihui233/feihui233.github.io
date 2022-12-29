@@ -20,28 +20,33 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="代码Go">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。 这种转换最原始的方式就是手动编写大量的get&#x2F;set代码，属性少的时候还好，属性多的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java对象复制">
+<meta property="og:url" content="http://example.com/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/index.html">
 <meta property="og:site_name" content="代码Go">
+<meta property="og:description" content="在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。 这种转换最原始的方式就是手动编写大量的get&#x2F;set代码，属性少的时候还好，属性多的">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-19T09:09:00.000Z">
+<meta property="article:modified_time" content="2022-12-19T09:13:14.336Z">
 <meta property="article:author" content="feihui">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>代码Go</title>
+  <title>java对象复制 | 代码Go</title>
   
 
 
@@ -177,9 +182,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -195,10 +201,9 @@
       <meta itemprop="name" content="代码Go">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/java%E5%AF%B9%E8%B1%A1%E5%A4%8D%E5%88%B6/" class="post-title-link" itemprop="url">java对象复制</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          java对象复制
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -231,7 +236,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。</p>
+        <p>在我们实际项目开发过程中，我们经常需要将不同的两个对象实例进行属性复制，从而基于源对象的属性信息进行后续操作，而不改变源对象的属性信息。比如DTO数据传输对象和数据对象DO，我们需要将DO对象进行属性复制到DTO，但是对象格式又不一样，所以我们需要编写映射代码将对象中的属性值从一种类型转换成另一种类型。</p>
 <p>这种转换最原始的方式就是手动编写大量的get&#x2F;set代码，属性少的时候还好，属性多的时候就非常繁琐了，一个合格的程序员显然不会仅仅局限于get&#x2F;set。</p>
 <p>针对这个问题，市场上诞生了很多方便的类库，用于对象拷贝。常用的有apache BeanUtils、spring BeanUtils、Dozer、Orika等拷贝工具。</p>
 <p>何不可变类<br>当类的实例一经创建，其内容便不可改变，即无法修改其成员变量。</p>
@@ -577,498 +582,33 @@ Class&lt;? extends IConvert&gt; convert() default IConvert.class;
 <p>实现：</p>
 <p>public static void main(String[] args) {<br>    UserDTO userDTO &#x3D; new UserDTO();<br>    userDTO.setId(1);<br>    userDTO.setUserName(“哈哈”);<br>    userDTO.setCreateTime(new Date());<br>    UserVO userVO &#x3D; JSON.parseObject(JSON.toJSONString(userDTO), UserVO.class);<br>    System.out.println(JSON.toJSONString(userVO));<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>复制方案选择<br>手写get&#x2F;set肯定是效率最高的；<br>不要使用Apache Beanutils，因为效率低，阿里巴巴规范都直接禁止使用；<br>一般情况使用Spring Beanutils就可以了，效率OK，且本来就是Spring中的东西，不用依赖其它包。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">AtomicInteger源码分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-19 17:09:00 / 修改时间：17:52:13" itemprop="dateCreated datePublished" datetime="2022-12-19T17:09:00+08:00">2022-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet"><a href="#深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet" class="headerlink" title="深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()"></a>深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()</h3><p>为什么需要AtomicInteger原子操作类？</p>
-<p>对于Java中的运算操作，例如自增或自减，若没有进行额外的同步操作，在多线程环境下就是线程不安全的。num++解析为num&#x3D;num+1，明显，这个操作不具备原子性，多线程并发共享这个变量时必然会出现问题。</p>
-<p>public class AtomicIntegerTest {</p>
-<pre><code>private static final int THREADS_CONUT = 20;
-public static int count = 0;
- 
-public static void increase() &#123;
-    count++;
-&#125;
- 
-public static void main(String[] args) &#123;
-    Thread[] threads = new Thread[THREADS_CONUT];
-    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
-        threads[i] = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int i = 0; i &lt; 1000; i++) &#123;
-                    increase();
-                &#125;
-            &#125;
-        &#125;);
-        threads[i].start();
-    &#125;
- 
-    while (Thread.activeCount() &gt; 1) &#123;
-        Thread.yield();
-    &#125;
-    System.out.println(count);
-&#125;
-</code></pre>
-<p>}<br>这里运行了20个线程，每个线程对count变量进行1000此自增操作，如果上面这段代码能够正常并发的话，最后的结果应该是20000才对，但实际结果却发现每次运行的结果都不相同，都是一个小于20000的数字。</p>
-<p>把上面的代码改造成AtomicInteger原子类型</p>
-<p>import java.util.concurrent.atomic.AtomicInteger;</p>
-<p>public class AtomicIntegerTest {</p>
-<pre><code>private static final int THREADS_CONUT = 20;
-public static AtomicInteger count = new AtomicInteger(0);
- 
-public static void increase() &#123;
-    count.incrementAndGet();
-&#125;
- 
-public static void main(String[] args) &#123;
-    Thread[] threads = new Thread[THREADS_CONUT];
-    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
-        threads[i] = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int i = 0; i &lt; 1000; i++) &#123;
-                    increase();
-                &#125;
-            &#125;
-        &#125;);
-        threads[i].start();
-    &#125;
- 
-    while (Thread.activeCount() &gt; 1) &#123;
-        Thread.yield();
-    &#125;
-    System.out.println(count);
-&#125;
-</code></pre>
-<p>}<br>结果每次都输出20000，程序输出了正确的结果，这都归功于AtomicInteger.incrementAndGet()方法的原子性。</p>
-<p>多线程</p>
-<p>同步：多线程并发访问共享数据时，保证共享数据再同一时刻只被一个或一些线程使用。</p>
-<p>我们知道，阻塞同步和非阻塞同步都是实现线程安全的两个保障手段，非阻塞同步对于阻塞同步而言主要解决了阻塞同步中线程阻塞和唤醒带来的性能问题，那什么叫做非阻塞同步呢？在并发环境下，某个线程对共享变量先进行操作，如果没有其他线程争用共享数据那操作就成功；如果存在数据的争用冲突，那就才去补偿措施，比如不断的重试机制，直到成功为止，因为这种乐观的并发策略不需要把线程挂起，也就把这种同步操作称为非阻塞同步（操作和冲突检测具备原子性）。在硬件指令集的发展驱动下，使得 “操作和冲突检测” 这种看起来需要多次操作的行为只需要一条处理器指令便可以完成，这些指令中就包括非常著名的CAS指令（Compare-And-Swap比较并交换）。</p>
-<p>incrementAndGet()方法在一个无限循环体内，不断尝试将一个比当前值大1的新值赋给自己，如果失败则说明在执行”获取-设置”操作的时已经被其它线程修改过了，于是便再次进入循环下一次操作，直到成功为止。这个便是AtomicInteger原子性的”诀窍”了，继续进源码看它的compareAndSet方法:</p>
-<p>java源码</p>
-<p>一个AtomicInteger用于诸如原子增量计数器的应用程序中，不能用作Integer的替代品 。 但是，这个类确实扩展了Number以允许通过处理基于数字类的工具和实用程序的统一访问。</p>
-<p>Modifier and Type	Method and Description<br>int	accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)<br>使用将给定函数应用于当前值和给定值的结果原子更新当前值，返回更新后的值。</p>
-<p>int	addAndGet(int delta)<br>将给定的值原子地添加到当前值。</p>
-<p>boolean	compareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将该值原子设置为给定的更新值。</p>
-<p>int	decrementAndGet()<br>原子减1当前值。</p>
-<p>double	doubleValue()<br>返回此值 AtomicInteger为 double一个宽元转换后。</p>
-<p>float	floatValue()<br>返回此值 AtomicInteger为 float一个宽元转换后。</p>
-<p>int	get()<br>获取当前值。</p>
-<p>int	getAndAccumulate(int x, IntBinaryOperator accumulatorFunction)<br>使用给定函数应用给当前值和给定值的结果原子更新当前值，返回上一个值。</p>
-<p>int	getAndAdd(int delta)<br>将给定的值原子地添加到当前值。</p>
-<p>int	getAndDecrement()<br>原子减1当前值。</p>
-<p>int	getAndIncrement()<br>原子上增加一个当前值。</p>
-<p>int	getAndSet(int newValue)<br>将原子设置为给定值并返回旧值。</p>
-<p>int	getAndUpdate(IntUnaryOperator updateFunction)<br>用应用给定函数的结果原子更新当前值，返回上一个值。</p>
-<p>int	incrementAndGet()<br>原子上增加一个当前值。</p>
-<p>int	intValue()<br>将 AtomicInteger的值作为 int 。</p>
-<p>void	lazySet(int newValue)<br>最终设定为给定值。</p>
-<p>long	longValue()<br>返回此值 AtomicInteger为 long一个宽元转换后。</p>
-<p>void	set(int newValue)<br>设置为给定值。</p>
-<p>String	toString()<br>返回当前值的String表示形式。</p>
-<p>int	updateAndGet(IntUnaryOperator updateFunction)<br>使用给定函数的结果原子更新当前值，返回更新的值。</p>
-<p>boolean	weakCompareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将值设置为给定更新值。</p>
-<p>package java.util.concurrent.atomic;<br>import java.util.function.IntUnaryOperator;<br>import java.util.function.IntBinaryOperator;<br>import sun.misc.Unsafe;</p>
-<p>public class AtomicInteger extends Number implements java.io.Serializable {<br>    private static final long serialVersionUID &#x3D; 6214790243416807050L;</p>
-<pre><code>// setup to use Unsafe.compareAndSwapInt for updates
-private static final Unsafe unsafe = Unsafe.getUnsafe();
-private static final long valueOffset;
- 
-static &#123;
-    try &#123;
-        valueOffset = unsafe.objectFieldOffset
-            (AtomicInteger.class.getDeclaredField(&quot;value&quot;));
-    &#125; catch (Exception ex) &#123; throw new Error(ex); &#125;
-&#125;
- 
-private volatile int value;
- 
-public AtomicInteger(int initialValue) &#123;
-    value = initialValue;
-&#125;
- 
-public AtomicInteger() &#123;
-&#125;
- 
-public final int get() &#123;
-    return value;
-&#125;
- 
-public final void set(int newValue) &#123;
-    value = newValue;
-&#125;
- 
-public final void lazySet(int newValue) &#123;
-    unsafe.putOrderedInt(this, valueOffset, newValue);
-&#125;
- 
-public final int getAndSet(int newValue) &#123;
-    return unsafe.getAndSetInt(this, valueOffset, newValue);
-&#125;
- 
-public final boolean compareAndSet(int expect, int update) &#123;
-    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
-&#125;
- 
-public final boolean weakCompareAndSet(int expect, int update) &#123;
-    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
-&#125;
- 
-public final int getAndIncrement() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, 1);
-&#125;
- 
-public final int getAndDecrement() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, -1);
-&#125;	
-
-public final int getAndAdd(int delta) &#123;
-    return unsafe.getAndAddInt(this, valueOffset, delta);
-&#125;	
-
-public final int incrementAndGet() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
-&#125;	
-
-public final int decrementAndGet() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, -1) - 1;
-&#125;	
-
-public final int addAndGet(int delta) &#123;
-    return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
-&#125;	
-
-public final int getAndUpdate(IntUnaryOperator updateFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = updateFunction.applyAsInt(prev);
-    &#125; while (!compareAndSet(prev, next));
-    return prev;
-&#125;	
-
-public final int updateAndGet(IntUnaryOperator updateFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = updateFunction.applyAsInt(prev);
-    &#125; while (!compareAndSet(prev, next));
-    return next;
-&#125;	
-
-public final int getAndAccumulate(int x,
-                                  IntBinaryOperator accumulatorFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = accumulatorFunction.applyAsInt(prev, x);
-    &#125; while (!compareAndSet(prev, next));
-    return prev;
-&#125;	
-
-public final int accumulateAndGet(int x,
-                                  IntBinaryOperator accumulatorFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = accumulatorFunction.applyAsInt(prev, x);
-    &#125; while (!compareAndSet(prev, next));
-    return next;
-&#125;	
-
-public String toString() &#123;
-    return Integer.toString(get());
-&#125;
-
-public int intValue() &#123;
-    return get();
-&#125;	
-
-public long longValue() &#123;
-    return (long)get();
-&#125;	
-
-public float floatValue() &#123;
-    return (float)get();
-&#125;	
-
-public double doubleValue() &#123;
-    return (double)get();
-&#125;
-</code></pre>
-<p>}	</p>
-<p>Modifier and Type	Method and Description<br>byte	byteValue()<br>返回指定号码作为值 byte ，这可能涉及舍入或截断。</p>
-<p>abstract double	doubleValue()<br>返回指定数字的值为 double ，可能涉及四舍五入。</p>
-<p>abstract float	floatValue()<br>返回指定数字的值为 float ，可能涉及四舍五入。</p>
-<p>abstract int	intValue()<br>返回指定号码作为值 int ，这可能涉及舍入或截断。</p>
-<p>abstract long	longValue()<br>返回指定数字的值为 long ，可能涉及四舍五入或截断。</p>
-<p>short	shortValue()<br>返回指定号码作为值 short ，这可能涉及舍入或截断。</p>
-<p>package java.lang;</p>
-<p>public abstract class Number implements java.io.Serializable {</p>
-<pre><code>public abstract int intValue();
- 
-public abstract long longValue();
- 
-public abstract float floatValue();
- 
-public abstract double doubleValue();
- 
-public byte byteValue() &#123;
-    return (byte)intValue();
-&#125;
- 
-public short shortValue() &#123;
-    return (short)intValue();
-&#125;
-
-private static final long serialVersionUID = -8742448824652078965L;
-&#125;
-</code></pre>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="prev" title="AtomicInteger源码分析">
+      <i class="fa fa-chevron-left"></i> AtomicInteger源码分析
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/test-my-site/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/test-my-site/" class="post-title-link" itemprop="url">test_my_site</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-19 09:07:16 / 修改时间：10:01:09" itemprop="dateCreated datePublished" datetime="2022-12-19T09:07:16+08:00">2022-12-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/PlayStation/" itemprop="url" rel="index"><span itemprop="name">PlayStation</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="这是一段测试文本"><a href="#这是一段测试文本" class="headerlink" title="这是一段测试文本"></a>这是一段测试文本</h1><p>在文章中插入引言，可包含作者、来源和标题。</p>
-<p><strong>别号：</strong> quote</p>
-<blockquote><p>content</p>
-<footer><strong>[author[</strong><cite>source]] [link] [source_link_title]</cite></footer></blockquote>
-
-<p><strong>没有提供参数，则只输出普通的 blockquote</strong></p>
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>
-
-<p><strong>引用书上的句子</strong></p>
-<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
-<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
-
-<p><strong>引用 Twitter</strong></p>
-<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a target="_blank" rel="noopener" href="http://devdocs.io/">http://devdocs.io</a></p>
-<footer><strong>@DevDocs</strong><cite><a target="_blank" rel="noopener" href="https://twitter.com/devdocs/status/356095192085962752">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
-
-
-
-<p><strong>引用网络上的文章</strong></p>
-<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
-
-<h2 id="Gist"><a href="#Gist" class="headerlink" title="Gist"></a>Gist</h2><p>在文章中嵌入 Gist。</p>
-<script src="//gist.github.com/gist_id.js?file=[filename]"></script>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Author">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="代码Go">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/19/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-12-19 09:06:05" itemprop="dateCreated datePublished" datetime="2022-12-19T09:06:05+08:00">2022-12-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
