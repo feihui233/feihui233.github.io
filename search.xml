@@ -667,13 +667,9 @@ private static final long serialVersionUID = -8742448824652078965L;
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/17/%E6%AD%BB%E9%94%81/</url>
-    <content><![CDATA[<hr>
-<p>title: 死锁<br>date: 2022-12-19 17:09:00<br>tags: java<br>comments: true</p>
-<p>categories: [java]</p>
-<hr>
-<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>互相拿到对方的锁，同时又不能放弃当前的锁。指相互之间竞争相同资源的线程因为相互等待而导致永久阻塞。</p>
+    <title>test_my_site</title>
+    <url>/2022/12/19/%E6%AD%BB%E9%94%81/</url>
+    <content><![CDATA[<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>互相拿到对方的锁，同时又不能放弃当前的锁。指相互之间竞争相同资源的线程因为相互等待而导致永久阻塞。</p>
 <p><img src="https://raw.githubusercontent.com/feihui233/feihuiPic/main/resource/%E6%AD%BB%E9%94%81.png" alt="死锁"></p>
 <h2 id="死锁发生的原因"><a href="#死锁发生的原因" class="headerlink" title="死锁发生的原因"></a>死锁发生的原因</h2><h4 id="互-占-不-循："><a href="#互-占-不-循：" class="headerlink" title="互 占 不 循："></a>互 占 不 循：</h4><ol>
 <li><strong>互</strong>斥：	共享资源x和y只能被一个线程占用</li>
@@ -684,5 +680,12 @@ private static final long serialVersionUID = -8742448824652078965L;
 <h3 id="避免死锁的措施"><a href="#避免死锁的措施" class="headerlink" title="避免死锁的措施"></a>避免死锁的措施</h3><p>上面说到发生死锁必须同时满足四个条件，那么，我们破坏其中一个条件，就可以解决死锁的问题。如果已经发生了死锁，一般没有什么好的方法来解决，只能通过重启应用，所以如果要解决死锁问题，最好的方式就是提前规避。</p>
 <p>首先，我们肯定不能去破坏第一个条件，锁的作用就是要互斥。所以，只能去破坏其他三个条件。</p>
 ]]></content>
+      <categories>
+        <category>Diary</category>
+        <category>PlayStation</category>
+      </categories>
+      <tags>
+        <tag>demo</tag>
+      </tags>
   </entry>
 </search>
