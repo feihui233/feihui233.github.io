@@ -1,6 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AtomicInteger源码分析</title>
+    <url>/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[<h3 id="深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet"><a href="#深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet" class="headerlink" title="深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()"></a>深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()</h3><p>为什么需要AtomicInteger原子操作类？</p>
+<p>对于Java中的运算操作，例如自增或自减，若没有进行额外的同步操作，在多线程环境下就是线程不安全的。num++解析为num&#x3D;num+1，明显，这个操作不具备原子性，多线程并发共享这个变量时必然会出现问题。</p>
+<p>public class AtomicIntegerTest {</p>
+<pre><code>private static final int THREADS_CONUT = 20;
+public static int count = 0;
+ 
+public static void increase() &#123;
+    count++;
+&#125;
+ 
+public static void main(String[] args) &#123;
+    Thread[] threads = new Thread[THREADS_CONUT];
+    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
+        threads[i] = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int i = 0; i &lt; 1000; i++) &#123;
+                    increase();
+                &#125;
+            &#125;
+        &#125;);
+        threads[i].start();
+    &#125;
+ 
+    while (Thread.activeCount() &gt; 1) &#123;
+        Thread.yield();
+    &#125;
+    System.out.println(count);
+&#125;
+</code></pre>
+<p>}<br>这里运行了20个线程，每个线程对count变量进行1000此自增操作，如果上面这段代码能够正常并发的话，最后的结果应该是20000才对，但实际结果却发现每次运行的结果都不相同，都是一个小于20000的数字。</p>
+<p>把上面的代码改造成AtomicInteger原子类型</p>
+<p>import java.util.concurrent.atomic.AtomicInteger;</p>
+<p>public class AtomicIntegerTest {</p>
+<pre><code>private static final int THREADS_CONUT = 20;
+public static AtomicInteger count = new AtomicInteger(0);
+ 
+public static void increase() &#123;
+    count.incrementAndGet();
+&#125;
+ 
+public static void main(String[] args) &#123;
+    Thread[] threads = new Thread[THREADS_CONUT];
+    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
+        threads[i] = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int i = 0; i &lt; 1000; i++) &#123;
+                    increase();
+                &#125;
+            &#125;
+        &#125;);
+        threads[i].start();
+    &#125;
+ 
+    while (Thread.activeCount() &gt; 1) &#123;
+        Thread.yield();
+    &#125;
+    System.out.println(count);
+&#125;
+</code></pre>
+<p>}<br>结果每次都输出20000，程序输出了正确的结果，这都归功于AtomicInteger.incrementAndGet()方法的原子性。</p>
+<p>多线程</p>
+<p>同步：多线程并发访问共享数据时，保证共享数据再同一时刻只被一个或一些线程使用。</p>
+<p>我们知道，阻塞同步和非阻塞同步都是实现线程安全的两个保障手段，非阻塞同步对于阻塞同步而言主要解决了阻塞同步中线程阻塞和唤醒带来的性能问题，那什么叫做非阻塞同步呢？在并发环境下，某个线程对共享变量先进行操作，如果没有其他线程争用共享数据那操作就成功；如果存在数据的争用冲突，那就才去补偿措施，比如不断的重试机制，直到成功为止，因为这种乐观的并发策略不需要把线程挂起，也就把这种同步操作称为非阻塞同步（操作和冲突检测具备原子性）。在硬件指令集的发展驱动下，使得 “操作和冲突检测” 这种看起来需要多次操作的行为只需要一条处理器指令便可以完成，这些指令中就包括非常著名的CAS指令（Compare-And-Swap比较并交换）。</p>
+<p>incrementAndGet()方法在一个无限循环体内，不断尝试将一个比当前值大1的新值赋给自己，如果失败则说明在执行”获取-设置”操作的时已经被其它线程修改过了，于是便再次进入循环下一次操作，直到成功为止。这个便是AtomicInteger原子性的”诀窍”了，继续进源码看它的compareAndSet方法:</p>
+<p>java源码</p>
+<p>一个AtomicInteger用于诸如原子增量计数器的应用程序中，不能用作Integer的替代品 。 但是，这个类确实扩展了Number以允许通过处理基于数字类的工具和实用程序的统一访问。</p>
+<p>Modifier and Type	Method and Description<br>int	accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)<br>使用将给定函数应用于当前值和给定值的结果原子更新当前值，返回更新后的值。</p>
+<p>int	addAndGet(int delta)<br>将给定的值原子地添加到当前值。</p>
+<p>boolean	compareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将该值原子设置为给定的更新值。</p>
+<p>int	decrementAndGet()<br>原子减1当前值。</p>
+<p>double	doubleValue()<br>返回此值 AtomicInteger为 double一个宽元转换后。</p>
+<p>float	floatValue()<br>返回此值 AtomicInteger为 float一个宽元转换后。</p>
+<p>int	get()<br>获取当前值。</p>
+<p>int	getAndAccumulate(int x, IntBinaryOperator accumulatorFunction)<br>使用给定函数应用给当前值和给定值的结果原子更新当前值，返回上一个值。</p>
+<p>int	getAndAdd(int delta)<br>将给定的值原子地添加到当前值。</p>
+<p>int	getAndDecrement()<br>原子减1当前值。</p>
+<p>int	getAndIncrement()<br>原子上增加一个当前值。</p>
+<p>int	getAndSet(int newValue)<br>将原子设置为给定值并返回旧值。</p>
+<p>int	getAndUpdate(IntUnaryOperator updateFunction)<br>用应用给定函数的结果原子更新当前值，返回上一个值。</p>
+<p>int	incrementAndGet()<br>原子上增加一个当前值。</p>
+<p>int	intValue()<br>将 AtomicInteger的值作为 int 。</p>
+<p>void	lazySet(int newValue)<br>最终设定为给定值。</p>
+<p>long	longValue()<br>返回此值 AtomicInteger为 long一个宽元转换后。</p>
+<p>void	set(int newValue)<br>设置为给定值。</p>
+<p>String	toString()<br>返回当前值的String表示形式。</p>
+<p>int	updateAndGet(IntUnaryOperator updateFunction)<br>使用给定函数的结果原子更新当前值，返回更新的值。</p>
+<p>boolean	weakCompareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将值设置为给定更新值。</p>
+<p>package java.util.concurrent.atomic;<br>import java.util.function.IntUnaryOperator;<br>import java.util.function.IntBinaryOperator;<br>import sun.misc.Unsafe;</p>
+<p>public class AtomicInteger extends Number implements java.io.Serializable {<br>    private static final long serialVersionUID &#x3D; 6214790243416807050L;</p>
+<pre><code>// setup to use Unsafe.compareAndSwapInt for updates
+private static final Unsafe unsafe = Unsafe.getUnsafe();
+private static final long valueOffset;
+ 
+static &#123;
+    try &#123;
+        valueOffset = unsafe.objectFieldOffset
+            (AtomicInteger.class.getDeclaredField(&quot;value&quot;));
+    &#125; catch (Exception ex) &#123; throw new Error(ex); &#125;
+&#125;
+ 
+private volatile int value;
+ 
+public AtomicInteger(int initialValue) &#123;
+    value = initialValue;
+&#125;
+ 
+public AtomicInteger() &#123;
+&#125;
+ 
+public final int get() &#123;
+    return value;
+&#125;
+ 
+public final void set(int newValue) &#123;
+    value = newValue;
+&#125;
+ 
+public final void lazySet(int newValue) &#123;
+    unsafe.putOrderedInt(this, valueOffset, newValue);
+&#125;
+ 
+public final int getAndSet(int newValue) &#123;
+    return unsafe.getAndSetInt(this, valueOffset, newValue);
+&#125;
+ 
+public final boolean compareAndSet(int expect, int update) &#123;
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+&#125;
+ 
+public final boolean weakCompareAndSet(int expect, int update) &#123;
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+&#125;
+ 
+public final int getAndIncrement() &#123;
+    return unsafe.getAndAddInt(this, valueOffset, 1);
+&#125;
+ 
+public final int getAndDecrement() &#123;
+    return unsafe.getAndAddInt(this, valueOffset, -1);
+&#125;	
+
+public final int getAndAdd(int delta) &#123;
+    return unsafe.getAndAddInt(this, valueOffset, delta);
+&#125;	
+
+public final int incrementAndGet() &#123;
+    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
+&#125;	
+
+public final int decrementAndGet() &#123;
+    return unsafe.getAndAddInt(this, valueOffset, -1) - 1;
+&#125;	
+
+public final int addAndGet(int delta) &#123;
+    return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
+&#125;	
+
+public final int getAndUpdate(IntUnaryOperator updateFunction) &#123;
+    int prev, next;
+    do &#123;
+        prev = get();
+        next = updateFunction.applyAsInt(prev);
+    &#125; while (!compareAndSet(prev, next));
+    return prev;
+&#125;	
+
+public final int updateAndGet(IntUnaryOperator updateFunction) &#123;
+    int prev, next;
+    do &#123;
+        prev = get();
+        next = updateFunction.applyAsInt(prev);
+    &#125; while (!compareAndSet(prev, next));
+    return next;
+&#125;	
+
+public final int getAndAccumulate(int x,
+                                  IntBinaryOperator accumulatorFunction) &#123;
+    int prev, next;
+    do &#123;
+        prev = get();
+        next = accumulatorFunction.applyAsInt(prev, x);
+    &#125; while (!compareAndSet(prev, next));
+    return prev;
+&#125;	
+
+public final int accumulateAndGet(int x,
+                                  IntBinaryOperator accumulatorFunction) &#123;
+    int prev, next;
+    do &#123;
+        prev = get();
+        next = accumulatorFunction.applyAsInt(prev, x);
+    &#125; while (!compareAndSet(prev, next));
+    return next;
+&#125;	
+
+public String toString() &#123;
+    return Integer.toString(get());
+&#125;
+
+public int intValue() &#123;
+    return get();
+&#125;	
+
+public long longValue() &#123;
+    return (long)get();
+&#125;	
+
+public float floatValue() &#123;
+    return (float)get();
+&#125;	
+
+public double doubleValue() &#123;
+    return (double)get();
+&#125;
+</code></pre>
+<p>}	</p>
+<p>Modifier and Type	Method and Description<br>byte	byteValue()<br>返回指定号码作为值 byte ，这可能涉及舍入或截断。</p>
+<p>abstract double	doubleValue()<br>返回指定数字的值为 double ，可能涉及四舍五入。</p>
+<p>abstract float	floatValue()<br>返回指定数字的值为 float ，可能涉及四舍五入。</p>
+<p>abstract int	intValue()<br>返回指定号码作为值 int ，这可能涉及舍入或截断。</p>
+<p>abstract long	longValue()<br>返回指定数字的值为 long ，可能涉及四舍五入或截断。</p>
+<p>short	shortValue()<br>返回指定号码作为值 short ，这可能涉及舍入或截断。</p>
+<p>package java.lang;</p>
+<p>public abstract class Number implements java.io.Serializable {</p>
+<pre><code>public abstract int intValue();
+ 
+public abstract long longValue();
+ 
+public abstract float floatValue();
+ 
+public abstract double doubleValue();
+ 
+public byte byteValue() &#123;
+    return (byte)intValue();
+&#125;
+ 
+public short shortValue() &#123;
+    return (short)intValue();
+&#125;
+
+private static final long serialVersionUID = -8742448824652078965L;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/12/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -328,263 +584,7 @@ public static void main(String[] args) {
       </tags>
   </entry>
   <entry>
-    <title>AtomicInteger源码分析</title>
-    <url>/2022/12/19/AtomicInteger%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</url>
-    <content><![CDATA[<h3 id="深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet"><a href="#深入学习java源码之AtomicInteger-get-与AtomicInteger-incrementAndGet" class="headerlink" title="深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()"></a>深入学习java源码之AtomicInteger.get()与AtomicInteger.incrementAndGet()</h3><p>为什么需要AtomicInteger原子操作类？</p>
-<p>对于Java中的运算操作，例如自增或自减，若没有进行额外的同步操作，在多线程环境下就是线程不安全的。num++解析为num&#x3D;num+1，明显，这个操作不具备原子性，多线程并发共享这个变量时必然会出现问题。</p>
-<p>public class AtomicIntegerTest {</p>
-<pre><code>private static final int THREADS_CONUT = 20;
-public static int count = 0;
- 
-public static void increase() &#123;
-    count++;
-&#125;
- 
-public static void main(String[] args) &#123;
-    Thread[] threads = new Thread[THREADS_CONUT];
-    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
-        threads[i] = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int i = 0; i &lt; 1000; i++) &#123;
-                    increase();
-                &#125;
-            &#125;
-        &#125;);
-        threads[i].start();
-    &#125;
- 
-    while (Thread.activeCount() &gt; 1) &#123;
-        Thread.yield();
-    &#125;
-    System.out.println(count);
-&#125;
-</code></pre>
-<p>}<br>这里运行了20个线程，每个线程对count变量进行1000此自增操作，如果上面这段代码能够正常并发的话，最后的结果应该是20000才对，但实际结果却发现每次运行的结果都不相同，都是一个小于20000的数字。</p>
-<p>把上面的代码改造成AtomicInteger原子类型</p>
-<p>import java.util.concurrent.atomic.AtomicInteger;</p>
-<p>public class AtomicIntegerTest {</p>
-<pre><code>private static final int THREADS_CONUT = 20;
-public static AtomicInteger count = new AtomicInteger(0);
- 
-public static void increase() &#123;
-    count.incrementAndGet();
-&#125;
- 
-public static void main(String[] args) &#123;
-    Thread[] threads = new Thread[THREADS_CONUT];
-    for (int i = 0; i &lt; THREADS_CONUT; i++) &#123;
-        threads[i] = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int i = 0; i &lt; 1000; i++) &#123;
-                    increase();
-                &#125;
-            &#125;
-        &#125;);
-        threads[i].start();
-    &#125;
- 
-    while (Thread.activeCount() &gt; 1) &#123;
-        Thread.yield();
-    &#125;
-    System.out.println(count);
-&#125;
-</code></pre>
-<p>}<br>结果每次都输出20000，程序输出了正确的结果，这都归功于AtomicInteger.incrementAndGet()方法的原子性。</p>
-<p>多线程</p>
-<p>同步：多线程并发访问共享数据时，保证共享数据再同一时刻只被一个或一些线程使用。</p>
-<p>我们知道，阻塞同步和非阻塞同步都是实现线程安全的两个保障手段，非阻塞同步对于阻塞同步而言主要解决了阻塞同步中线程阻塞和唤醒带来的性能问题，那什么叫做非阻塞同步呢？在并发环境下，某个线程对共享变量先进行操作，如果没有其他线程争用共享数据那操作就成功；如果存在数据的争用冲突，那就才去补偿措施，比如不断的重试机制，直到成功为止，因为这种乐观的并发策略不需要把线程挂起，也就把这种同步操作称为非阻塞同步（操作和冲突检测具备原子性）。在硬件指令集的发展驱动下，使得 “操作和冲突检测” 这种看起来需要多次操作的行为只需要一条处理器指令便可以完成，这些指令中就包括非常著名的CAS指令（Compare-And-Swap比较并交换）。</p>
-<p>incrementAndGet()方法在一个无限循环体内，不断尝试将一个比当前值大1的新值赋给自己，如果失败则说明在执行”获取-设置”操作的时已经被其它线程修改过了，于是便再次进入循环下一次操作，直到成功为止。这个便是AtomicInteger原子性的”诀窍”了，继续进源码看它的compareAndSet方法:</p>
-<p>java源码</p>
-<p>一个AtomicInteger用于诸如原子增量计数器的应用程序中，不能用作Integer的替代品 。 但是，这个类确实扩展了Number以允许通过处理基于数字类的工具和实用程序的统一访问。</p>
-<p>Modifier and Type	Method and Description<br>int	accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)<br>使用将给定函数应用于当前值和给定值的结果原子更新当前值，返回更新后的值。</p>
-<p>int	addAndGet(int delta)<br>将给定的值原子地添加到当前值。</p>
-<p>boolean	compareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将该值原子设置为给定的更新值。</p>
-<p>int	decrementAndGet()<br>原子减1当前值。</p>
-<p>double	doubleValue()<br>返回此值 AtomicInteger为 double一个宽元转换后。</p>
-<p>float	floatValue()<br>返回此值 AtomicInteger为 float一个宽元转换后。</p>
-<p>int	get()<br>获取当前值。</p>
-<p>int	getAndAccumulate(int x, IntBinaryOperator accumulatorFunction)<br>使用给定函数应用给当前值和给定值的结果原子更新当前值，返回上一个值。</p>
-<p>int	getAndAdd(int delta)<br>将给定的值原子地添加到当前值。</p>
-<p>int	getAndDecrement()<br>原子减1当前值。</p>
-<p>int	getAndIncrement()<br>原子上增加一个当前值。</p>
-<p>int	getAndSet(int newValue)<br>将原子设置为给定值并返回旧值。</p>
-<p>int	getAndUpdate(IntUnaryOperator updateFunction)<br>用应用给定函数的结果原子更新当前值，返回上一个值。</p>
-<p>int	incrementAndGet()<br>原子上增加一个当前值。</p>
-<p>int	intValue()<br>将 AtomicInteger的值作为 int 。</p>
-<p>void	lazySet(int newValue)<br>最终设定为给定值。</p>
-<p>long	longValue()<br>返回此值 AtomicInteger为 long一个宽元转换后。</p>
-<p>void	set(int newValue)<br>设置为给定值。</p>
-<p>String	toString()<br>返回当前值的String表示形式。</p>
-<p>int	updateAndGet(IntUnaryOperator updateFunction)<br>使用给定函数的结果原子更新当前值，返回更新的值。</p>
-<p>boolean	weakCompareAndSet(int expect, int update)<br>如果当前值 &#x3D;&#x3D;为预期值，则将值设置为给定更新值。</p>
-<p>package java.util.concurrent.atomic;<br>import java.util.function.IntUnaryOperator;<br>import java.util.function.IntBinaryOperator;<br>import sun.misc.Unsafe;</p>
-<p>public class AtomicInteger extends Number implements java.io.Serializable {<br>    private static final long serialVersionUID &#x3D; 6214790243416807050L;</p>
-<pre><code>// setup to use Unsafe.compareAndSwapInt for updates
-private static final Unsafe unsafe = Unsafe.getUnsafe();
-private static final long valueOffset;
- 
-static &#123;
-    try &#123;
-        valueOffset = unsafe.objectFieldOffset
-            (AtomicInteger.class.getDeclaredField(&quot;value&quot;));
-    &#125; catch (Exception ex) &#123; throw new Error(ex); &#125;
-&#125;
- 
-private volatile int value;
- 
-public AtomicInteger(int initialValue) &#123;
-    value = initialValue;
-&#125;
- 
-public AtomicInteger() &#123;
-&#125;
- 
-public final int get() &#123;
-    return value;
-&#125;
- 
-public final void set(int newValue) &#123;
-    value = newValue;
-&#125;
- 
-public final void lazySet(int newValue) &#123;
-    unsafe.putOrderedInt(this, valueOffset, newValue);
-&#125;
- 
-public final int getAndSet(int newValue) &#123;
-    return unsafe.getAndSetInt(this, valueOffset, newValue);
-&#125;
- 
-public final boolean compareAndSet(int expect, int update) &#123;
-    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
-&#125;
- 
-public final boolean weakCompareAndSet(int expect, int update) &#123;
-    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
-&#125;
- 
-public final int getAndIncrement() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, 1);
-&#125;
- 
-public final int getAndDecrement() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, -1);
-&#125;	
-
-public final int getAndAdd(int delta) &#123;
-    return unsafe.getAndAddInt(this, valueOffset, delta);
-&#125;	
-
-public final int incrementAndGet() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
-&#125;	
-
-public final int decrementAndGet() &#123;
-    return unsafe.getAndAddInt(this, valueOffset, -1) - 1;
-&#125;	
-
-public final int addAndGet(int delta) &#123;
-    return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
-&#125;	
-
-public final int getAndUpdate(IntUnaryOperator updateFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = updateFunction.applyAsInt(prev);
-    &#125; while (!compareAndSet(prev, next));
-    return prev;
-&#125;	
-
-public final int updateAndGet(IntUnaryOperator updateFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = updateFunction.applyAsInt(prev);
-    &#125; while (!compareAndSet(prev, next));
-    return next;
-&#125;	
-
-public final int getAndAccumulate(int x,
-                                  IntBinaryOperator accumulatorFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = accumulatorFunction.applyAsInt(prev, x);
-    &#125; while (!compareAndSet(prev, next));
-    return prev;
-&#125;	
-
-public final int accumulateAndGet(int x,
-                                  IntBinaryOperator accumulatorFunction) &#123;
-    int prev, next;
-    do &#123;
-        prev = get();
-        next = accumulatorFunction.applyAsInt(prev, x);
-    &#125; while (!compareAndSet(prev, next));
-    return next;
-&#125;	
-
-public String toString() &#123;
-    return Integer.toString(get());
-&#125;
-
-public int intValue() &#123;
-    return get();
-&#125;	
-
-public long longValue() &#123;
-    return (long)get();
-&#125;	
-
-public float floatValue() &#123;
-    return (float)get();
-&#125;	
-
-public double doubleValue() &#123;
-    return (double)get();
-&#125;
-</code></pre>
-<p>}	</p>
-<p>Modifier and Type	Method and Description<br>byte	byteValue()<br>返回指定号码作为值 byte ，这可能涉及舍入或截断。</p>
-<p>abstract double	doubleValue()<br>返回指定数字的值为 double ，可能涉及四舍五入。</p>
-<p>abstract float	floatValue()<br>返回指定数字的值为 float ，可能涉及四舍五入。</p>
-<p>abstract int	intValue()<br>返回指定号码作为值 int ，这可能涉及舍入或截断。</p>
-<p>abstract long	longValue()<br>返回指定数字的值为 long ，可能涉及四舍五入或截断。</p>
-<p>short	shortValue()<br>返回指定号码作为值 short ，这可能涉及舍入或截断。</p>
-<p>package java.lang;</p>
-<p>public abstract class Number implements java.io.Serializable {</p>
-<pre><code>public abstract int intValue();
- 
-public abstract long longValue();
- 
-public abstract float floatValue();
- 
-public abstract double doubleValue();
- 
-public byte byteValue() &#123;
-    return (byte)intValue();
-&#125;
- 
-public short shortValue() &#123;
-    return (short)intValue();
-&#125;
-
-private static final long serialVersionUID = -8742448824652078965L;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test_my_site</title>
+    <title>死锁</title>
     <url>/2022/12/19/%E6%AD%BB%E9%94%81/</url>
     <content><![CDATA[<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>互相拿到对方的锁，同时又不能放弃当前的锁。指相互之间竞争相同资源的线程因为相互等待而导致永久阻塞。</p>
 <p><img src="https://raw.githubusercontent.com/feihui233/feihuiPic/main/resource/%E6%AD%BB%E9%94%81.png" alt="死锁"></p>
@@ -598,11 +598,336 @@ private static final long serialVersionUID = -8742448824652078965L;
 <p>首先，我们肯定不能去破坏第一个条件，锁的作用就是要互斥。所以，只能去破坏其他三个条件。</p>
 ]]></content>
       <categories>
-        <category>Diary</category>
-        <category>PlayStation</category>
+        <category>java</category>
       </categories>
       <tags>
-        <tag>demo</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>知乎上40个值得收藏的神回复</title>
+    <url>/2023/05/06/%E7%A5%9E%E5%9B%9E%E5%A4%8D/</url>
+    <content><![CDATA[<h1 id="知乎上40个值得收藏的神回复"><a href="#知乎上40个值得收藏的神回复" class="headerlink" title="知乎上40个值得收藏的神回复"></a>知乎上40个值得收藏的神回复</h1><p>01.交朋友的标准是什么？</p>
+<p>- Question -</p>
+<p>出世的智者，</p>
+<p>入世的强者，</p>
+<p>或者正常而阳光的普通人。</p>
+<p>- Answer -</p>
+<p>02.有哪些可以令人清醒的句子？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>你多学一样本事，</p>
+<p>就少说一句求人的话。</p>
+<p>- Answer -</p>
+<p>03.做哪些事情可以提升生活品质？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>定期扔东西。</p>
+<p>- Answer -</p>
+<p>04.结婚以后两个人在一起最重要的是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>就当这婚还没结。</p>
+<p>- Answer -</p>
+<p>05.把学费拿来念书还是环游世界更合适？</p>
+<p>为什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>在没有充分的知识作为前提的情况下，</p>
+<p>即使行了万里路，</p>
+<p>也不过是邮差而已。</p>
+<p>- Answer -</p>
+<p>06.你是如何强迫自己不断学习提升的？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>看过更大的世界后，</p>
+<p>就再也不甘心留在原地。</p>
+<p>不甘心就是动力。</p>
+<p>- Answer -</p>
+<p>07.你对自由的理解是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>说“不”的能力。</strong></p>
+<p>- Answer -</p>
+<p>08.你是如何走出人生的阴霾的？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>多走几步。</p>
+<p>- Answer -</p>
+<p>09.哪些技能，经较短时间的学习，</p>
+<p>就可以给人的生活带来巨大帮助？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>夸奖他人。</p>
+<p>- Answer -</p>
+<p>10.我读过很多书，</p>
+<p>但后来大部分都被我忘记了，</p>
+<p>那阅读的意义是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>当我还是个孩子的时候，</p>
+<p>我吃过很多食物，</p>
+<p>现在已经记不起来吃过什么了。</p>
+<p>但可以肯定的是，</p>
+<p><strong>它们中的一部分已经长成为我的骨头和肉。</strong></p>
+<p>- Answer -</p>
+<p>11.要怎样努力，才能成为很厉害的人？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>如果你注定要成为厉害的人，</p>
+<p>那问题的答案就深藏在你的血脉里；</p>
+<p>如果你注定不是厉害的人，</p>
+<p>那你便只需要做好你自己。</p>
+<p>- Answer -</p>
+<p>12.你在生活中得到过的最好的建议是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>“永远不要为尚未发生的事儿拧巴”、</strong></p>
+<p><strong>“觉得为时已晚，恰恰是最早的时候”。</strong></p>
+<p>- Answer -</p>
+<p>13.前半生与后半生的分界线是在哪里？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>此时此刻。</p>
+<p>- Answer -</p>
+<p>14.同样是别人比自己强，</p>
+<p>为什么有时会产生嫉妒心理，</p>
+<p>而有时会产生崇拜？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>远的崇拜，近的嫉妒；</p>
+<p>够不着的崇拜，够得着的嫉妒；</p>
+<p>有利益冲突的嫉妒，没利益冲突的崇拜。</p>
+<p>- Answer -</p>
+<p>15.如何让这个世界变得美好？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>把你自己变得更美好。</strong></p>
+<p>- Answer -</p>
+<p>16.二十六岁，工作三年</p>
+<p>却将留学三年，值得吗？</p>
+<p>- Question -</p>
+<p>普通玩家选择标准配置，</p>
+<p>高端玩家选择自定义配置。</p>
+<p>- Answer -</p>
+<p>17.世界上有那么多好书好电影</p>
+<p>注定看不完，</p>
+<p>我们对这个事实该持何种态度？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>怕什么真理无穷，</p>
+<p>进一寸有一寸的欢喜。</p>
+<p>—— 胡适</p>
+<p>- Answer -</p>
+<p>18.听过最落寞的一句话或诗句是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>不如意事常八九，</p>
+<p>可与言者无二三。</p>
+<p>- Answer -</p>
+<p>19.人这一生为什么要努力？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>最痛苦的事，不是失败，</strong></p>
+<p><strong>是我本可以。</strong></p>
+<p>- Answer -</p>
+<p>20.省钱的好办法有哪些？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>在买任何东西之前牢记九字箴言：</p>
+<p>你喜欢，你需要，你适合。</p>
+<p>PS：适用于很多事，包括感情也一样。</p>
+<p>- Answer -</p>
+<p>21.哪一段话让你有醍醐灌顶的感觉？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>人会长大三次。</p>
+<p>第一次是在发现自己不是世界中心的时候。</p>
+<p>第二次是在发现即使再怎么努力，</p>
+<p>终究还是有些事令人无能为力的时候。</p>
+<p>第三次是在，</p>
+<p>明知道有些事可能会无能为力，</p>
+<p>但还是会尽力争取的时候。</p>
+<p>- Answer -</p>
+<p>22.哪些行为是浪费时间？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>思而不学＋犹豫不决</p>
+<p>- Answer -</p>
+<p>23.如果好人不一定得到好报，</p>
+<p>那我们为什么还要做好事？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>我们坚持一件事情，</strong></p>
+<p><strong>并不是因为这样做了会有效果，</strong></p>
+<p><strong>而是坚信，这样做是对的。</strong></p>
+<p><strong>—— 哈维尔</strong></p>
+<p>- Answer -</p>
+<p>24.如何看待“年轻的时候需要的是朋友而不是人脉”？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>没有目的之交往，</p>
+<p>才能感动人。</p>
+<p>- Answer -</p>
+<p>25.有哪些道理是你读了不信、听不进去，</p>
+<p>直到你亲身经历方笃信不疑的？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>不要低估你的能力，</p>
+<p>不要高估你的毅力。</p>
+<p>- Answer -</p>
+<p>26.最能燃起你学习激情的一句话是什么？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>你不能把这个世界，</p>
+<p>让给你所鄙视的人。</p>
+<p>- Answer -</p>
+<p>27.你心中的完美爱情是怎么样的？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>可以有不完美。</strong></p>
+<p>- Answer -</p>
+<p>28 .怎样才能做到不在乎别人骂？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>你要相信，比你优秀的人</p>
+<p>基本没空骂你。</p>
+<p>- Answer -</p>
+<p>29.什么叫见过大世面？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>能享受最好的，</strong></p>
+<p><strong>能承受最坏的。</strong></p>
+<p>- Answer -</p>
+<p>30.为什么当看到好照片时</p>
+<p>人们通常的反应是</p>
+<p>“真不错，你用的是什么相机”</p>
+<p>当看到烂照片时，</p>
+<p>则往往笑话拍摄者水平很臭？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>人习惯性地</p>
+<p>将自己的成功归因于自身，</p>
+<p>失败归因于环境；</p>
+<p>而将他人的成功归因于环境，</p>
+<p>失败归因于其自身。</p>
+<p>- Answer -</p>
+<p>31.如何反驳</p>
+<p>“现实点，这个社会就是这样”？</p>
+<p>- Question -</p>
+<p><strong>“你是怎样，你的世界就是怎样。”</strong></p>
+<ul>
+<li>Answer -</li>
+</ul>
+<p>32.如何让感情保持新鲜感？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>所谓新鲜感，</p>
+<p>不是和未知的人一起去做同样的事情，</p>
+<p>而是和已知的人一起去体验未知的人生。</p>
+<ul>
+<li>Answer -</li>
+</ul>
+<p>33.情商不高的例子有哪些？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>对陌生人毕恭毕敬，</p>
+<p>对亲近的人随意发怒。</p>
+<p>- Answer -</p>
+<p>34.三十岁才开始学习编程，靠谱吗？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>种一棵树最好的时间是十年前，</strong></p>
+<p><strong>其次是现在。</strong></p>
+<p>- Answer -</p>
+<p>35.怎样在有效提出推荐或建议的同时，</p>
+<p>避免给人灌输和强迫的感觉？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>说服他人不要诉诸理性，</p>
+<p>应求于利益。</p>
+<p>- Answer -</p>
+<p>36.在一个足够小的星球上行走，</p>
+<p>我们是在上坡还是下坡？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>你感觉累就是上坡，</strong></p>
+<p><strong>感觉轻松就是下坡。</strong></p>
+<p>- Answer -</p>
+<p>37.你遇到过哪些让你眼前一亮、醍醐灌顶</p>
+<p>或对你改变很大的理念？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>天赋决定了你能达到的上限，</p>
+<p>努力程度决定了你能达到的下限。</p>
+<p>以绝大多数人的努力程度之低，</p>
+<p>远远没有达到要去拼天赋的地步。</p>
+<p>- Answer -</p>
+<p>38.扎克伯格初期是怎么</p>
+<p>保护Facebook的最初创意？</p>
+<p>为什么Facebook上线后</p>
+<p>没被其他大公司抄走?</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p>保护创意的最好方法，就是 ——</p>
+<p>将其最好地执行。</p>
+<p>- Answer -</p>
+<p>39.如何看待</p>
+<p>“年轻时就释怀与淡泊，是没有希望的”</p>
+<p>这句话？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>试图用一句话就来总结复杂的人生，</strong></p>
+<p><strong>是没有希望的。</strong></p>
+<p>- Answer -</p>
+<p>40.异国长期生活，</p>
+<p>改变了你的哪些“是非观”？</p>
+<ul>
+<li>Question -</li>
+</ul>
+<p><strong>很多事情，</strong></p>
+<p><strong>只是不同，并无是非。</strong></p>
+<p>- Answer -</p>
+<p>*作者：佚名，本文来源于网络。</p>
+]]></content>
+      <tags>
+        <tag>知乎文章</tag>
       </tags>
   </entry>
 </search>
